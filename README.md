@@ -1,100 +1,134 @@
-# SkillAlign AI
+# SkillUp AI
 
-AI-assisted skill gap analysis for aligning skill development curricula with industry requirements and emerging job-market demand.
+AI-powered skill gap analysis for aligning skill development curricula with real-world industry requirements and emerging job market demand.
 
 ---
 
 ## Problem Statement
 
-**Government of Maharashtra — Problem Statement ID 26134**
+### Challenges in aligning skill development programs with industry requirements and emerging job market demands
 
-> Challenges in aligning skill development programs with industry requirements and emerging job market demands
+Skill development programs can become outdated as industry requirements and job-market technologies evolve.
 
-SkillAlign AI addresses this problem by comparing skills demanded in job postings against the skills covered by an existing curriculum.
+SkillUp AI addresses this problem by comparing:
 
-The system identifies missing skills, prioritizes them using market demand, retrieves supporting job-posting evidence, and uses an LLM to generate grounded explanations and curriculum recommendations.
+> **What the industry currently demands**  
+> against  
+> **What a training curriculum currently teaches**
 
----
-
-## What SkillAlign AI Does
-
-The current V1 prototype analyzes:
-
-- **Job Role:** Java Developer
-- **Location:** Maharashtra
-- **Curriculum:** Java Full Stack Developer
-
-The system processes a sample of relevant job postings and produces:
-
-1. Market-demanded skills
-2. Curriculum-covered skills
-3. Missing skills
-4. Market demand percentage
-5. Gap priority
-6. Supporting job-posting evidence
-7. AI-generated explanation
-8. Evidence-supported curriculum recommendations
+The system identifies missing skills, prioritizes them based on market demand, retrieves supporting job-posting evidence, and uses a local LLM to explain why the missing skills matter.
 
 ---
 
-## Current V1 Results
+# What is SkillUp AI?
 
-For the current prototype:
+SkillUp AI is a GenAI/RAG-based prototype that performs **industry-driven curriculum skill gap analysis**.
 
-| Metric | Result |
-|---|---:|
-| Jobs analyzed | 72 |
-| Market skills | 36 |
-| Curriculum-covered skills | 21 |
-| Missing skills | 15 |
+A user selects:
 
-Examples of identified gaps:
+- Job Role
+- Location
+- Pre-loaded Curriculum
 
-| Skill | Market Demand | Priority |
-|---|---:|---|
-| Microservices | 47.22% | Medium |
-| AWS | 18.06% | Medium |
-| JSP | 15.28% | Medium |
-| Apache Kafka | 13.89% | Low |
-| Azure | 9.72% | Low |
+The system then:
+
+1. Finds relevant job postings from the job-market dataset.
+2. Extracts and normalizes skills from those jobs.
+3. Calculates the market demand for each skill.
+4. Compares market skills against the selected curriculum.
+5. Identifies missing skills.
+6. Prioritizes the missing skills using market demand.
+7. Retrieves supporting job-posting evidence using semantic search.
+8. Uses **Qwen 3 8B** through Ollama to generate an explanation for a selected skill gap.
+9. Displays the results through an interactive Streamlit dashboard.
 
 ---
 
-# Architecture
+# Current Version
+
+## V2 Prototype — Functional
+
+The current version supports:
+
+- Dynamic job-role selection
+- Dynamic location selection
+- Multiple pre-loaded curricula
+- Expanded skill taxonomy
+- Skill extraction and normalization
+- Market skill-demand analysis
+- Curriculum vs market comparison
+- Priority-based skill gaps
+- Qdrant vector search
+- Job-posting evidence retrieval
+- On-demand LLM explanations
+- Streamlit dashboard
+- Plotly visualizations
+
+The LLM is intentionally executed **on demand for a selected skill** instead of generating explanations for every gap during analysis.
+
+This significantly reduces unnecessary LLM calls and makes the application much faster to use.
+
+---
+
+# System Architecture
 
 ```text
-Indian Job Market Dataset
-            |
-            v
-   Job Role + Location
-       Filtering
-            |
-            v
- Skill Extraction & Normalization
-            |
-            v
-     Market Skill Demand
-            |
-            v
-   Existing Curriculum
-            |
-            v
-      Skill Gap Engine
-            |
-            v
-   Missing Skills + Priority
-            |
-            v
-    Qdrant Semantic Search
-            |
-            v
-      Evidence Package
-            |
-            v
-        Qwen 3 8B
-            |
-            v
-   Structured AI Explanation
-            |
-            v
-      Streamlit Dashboard
+                    ┌──────────────────────┐
+                    │   Job Market Dataset │
+                    │      ~98K Jobs       │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │ Job Role + Location  │
+                    │      Filtering        │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │   Skill Extraction   │
+                    │   & Normalization     │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │ Market Skill Demand  │
+                    └──────────┬───────────┘
+                               │
+              ┌────────────────┴────────────────┐
+              │                                 │
+              ▼                                 ▼
+   ┌──────────────────────┐          ┌──────────────────────┐
+   │ Existing Curriculum  │          │  Job Posting Data    │
+   └──────────┬───────────┘          └──────────┬───────────┘
+              │                                 │
+              ▼                                 ▼
+   ┌──────────────────────┐          ┌──────────────────────┐
+   │   Skill Gap Engine   │          │   Qdrant Vector DB   │
+   └──────────┬───────────┘          └──────────┬───────────┘
+              │                                 │
+              │                                 ▼
+              │                      ┌──────────────────────┐
+              │                      │ Evidence Retrieval   │
+              │                      └──────────┬───────────┘
+              │                                 │
+              └────────────────┬────────────────┘
+                               ▼
+                    ┌──────────────────────┐
+                    │    Skill Gap UI      │
+                    │     Streamlit        │
+                    └──────────┬───────────┘
+                               │
+                      User selects gap
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │     Qwen 3 8B        │
+                    │       Ollama         │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │ AI Skill Explanation │
+                    │ + Recommendations    │
+                    └──────────────────────┘
