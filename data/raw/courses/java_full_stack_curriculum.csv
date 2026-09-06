@@ -1,0 +1,23 @@
+course_id,course_name,module_name,skill
+JFS001,Java Full Stack Developer,Core Java,Java
+JFS001,Java Full Stack Developer,Core Java,Java EE / J2EE
+JFS001,Java Full Stack Developer,Core Java,Data Structures
+JFS001,Java Full Stack Developer,Core Java,Algorithms
+JFS001,Java Full Stack Developer,Core Java,Multithreading
+JFS001,Java Full Stack Developer,Spring Framework,Spring Framework
+JFS001,Java Full Stack Developer,Spring Framework,Spring Boot
+JFS001,Java Full Stack Developer,Spring Framework,Spring MVC
+JFS001,Java Full Stack Developer,Persistence,Hibernate
+JFS001,Java Full Stack Developer,Persistence,JPA
+JFS001,Java Full Stack Developer,Persistence,SQL
+JFS001,Java Full Stack Developer,API Development,REST APIs
+JFS001,Java Full Stack Developer,API Development,Web Services
+JFS001,Java Full Stack Developer,Frontend,HTML
+JFS001,Java Full Stack Developer,Frontend,CSS
+JFS001,Java Full Stack Developer,Frontend,JavaScript
+JFS001,Java Full Stack Developer,Frontend,Angular
+JFS001,Java Full Stack Developer,Frontend,Bootstrap
+JFS001,Java Full Stack Developer,Development Practices,Git
+JFS001,Java Full Stack Developer,Development Practices,Agile
+JFS001,Java Full Stack Developer,Development Practices,Software Testing
+JFS001,Java Full Stack Developer,Build Tools,Maven

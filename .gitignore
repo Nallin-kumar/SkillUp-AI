@@ -1,11 +1,23 @@
+# Python
 .venv/
 __pycache__/
 *.pyc
+*.pyo
 
+# Environment / secrets
 .env
+.env.*
 
-data/raw/
-data/processed/
-
+# IDE
 .vscode/
 .idea/
+
+# Large raw datasets
+data/raw/jobs/
+
+# Generated / processed data
+data/processed/
+
+# OS
+.DS_Store
+Thumbs.db
